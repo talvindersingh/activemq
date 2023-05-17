@@ -8,5 +8,5 @@ Steps
 2. Create a playbook (activemq.yml) that describes the deployment steps
 3. Create an Nginx configuration file (nginx.conf) and place it in the same directory as the playbook.
 4. Run the playbook to deploy ActiveMQ - 
-# ansible-playbook -i inventory.ini activemq.yml
+#ansible-playbook -i inventory.ini activemq.yml
 
