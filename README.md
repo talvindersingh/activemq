@@ -15,4 +15,4 @@ This updated playbook deploys two ActiveMQ instances: a primary and a backup. Ea
 
 Please ensure that you have the appropriate Docker image for ActiveMQ available in your Minikube environment and adjust the configuration files and commands as needed for your specific setup.
 
-Working on putting the nginx in front of the ActiveMQ instances.
+*Working on putting the nginx in front of the ActiveMQ instances.
