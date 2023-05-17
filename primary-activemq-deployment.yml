@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: primary-activemq
+  labels:
+    app: activemq
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: activemq
+      role: primary
+  template:
+    metadata:
+      labels:
+        app: activemq
+        role: primary
+    spec:
+      containers:
+        - name: activemq
+          image: activemq:latest
+          ports:
+            - containerPort: 61616
+          env:
+            - name: ACTIVEMQ_OPTS
+              value: "-Djava.net.preferIPv4Stack=true"
+          lifecycle:
+            preStop:
+              exec:
+                command: ["/bin/sh", "-c", "curl -X POST http://localhost:8161/admin/terminate"]
