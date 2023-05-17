@@ -1,0 +1,84 @@
+---
+- name: Deploy ActiveMQ using Docker containers
+  hosts: activemq
+  become: true
+  tasks:
+    - name: Install Docker
+      apt:
+        name: docker.io
+        state: present
+
+    - name: Install Docker Python module
+      pip:
+        name: docker
+
+    - name: Start primary ActiveMQ container
+      docker_container:
+        name: primary_activemq
+        image: activemq:latest
+        ports:
+          - "61616:61616"
+        state: started
+
+    - name: Start backup ActiveMQ container
+      docker_container:
+        name: backup_activemq
+        image: activemq:latest
+        ports:
+          - "61617:61616"
+        state: started
+
+- name: Set up failover mechanism
+  hosts: backup_instance
+  become: true
+  tasks:
+    - name: Stop backup ActiveMQ container
+      docker_container:
+        name: backup_activemq
+        state: stopped
+
+    - name: Start ActiveMQ container as primary
+      docker_container:
+        name: primary_activemq
+        image: activemq:latest
+        ports:
+          - "61616:61616"
+        state: started
+
+- name: Configure SSL/TLS certificates
+  hosts: activemq
+  become: true
+  tasks:
+    - name: Generate self-signed certificates
+      command: |
+        openssl req -new -newkey rsa:2048 -days 365 -nodes -x509 \
+        -keyout /etc/ssl/private/activemq.key \
+        -out /etc/ssl/certs/activemq.crt \
+        -subj "/C=US/ST=California/L=San Francisco/O=MyOrg/CN=activemq.example.com"
+
+    - name: Copy SSL/TLS certificates to ActiveMQ containers
+      copy:
+        src: /etc/ssl
+        dest: /activemq
+
+- name: Configure reverse proxy
+  hosts: reverse_proxy
+  become: true
+  tasks:
+    - name: Install Nginx
+      apt:
+        name: nginx
+        state: present
+
+    - name: Copy Nginx configuration file
+      copy:
+        src: nginx.conf
+        dest: /etc/nginx/nginx.conf
+      notify:
+        - restart nginx
+
+handlers:
+  - name: restart nginx
+    service:
+      name: nginx
+      state: restarted
