@@ -14,11 +14,11 @@
     - name: Start Minikube
       command: minikube start
 
-    - name: Create ActiveMQ network namespace
-      command: minikube ssh -- sudo ip netns add activemq
-
-    - name: Enable IP forwarding in the ActiveMQ network namespace
-      command: minikube ssh -- sudo ip netns exec activemq sysctl -w net.ipv4.ip_forward=1
+    - name: Apply Nginx Ingress Controller
+      kubectl:
+        kubeconfig: ~/.kube/config
+        src: nginx-ingress-controller.yml
+        state: present
 
     - name: Apply Primary ActiveMQ deployment
       kubectl:
@@ -32,14 +32,8 @@
         src: backup-activemq-deployment.yml
         state: present
 
-    - name: Apply Primary ActiveMQ service
+    - name: Apply ActiveMQ service
       kubectl:
         kubeconfig: ~/.kube/config
-        src: primary-activemq-service.yml
-        state: present
-
-    - name: Apply Backup ActiveMQ service
-      kubectl:
-        kubeconfig: ~/.kube/config
-        src: backup-activemq-service.yml
+        src: activemq-service.yml
         state: present
