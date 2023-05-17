@@ -11,5 +11,8 @@ Steps
 4. Run the playbook to deploy ActiveMQ - #**ansible-playbook -i inventory.ini activemq.yml**
 
 NOTE:
-This Ansible playbook sets up ActiveMQ using Docker containers with a primary and backup instance. It implements a failover mechanism where the backup instance automatically takes over if the primary instance fails. SSL/TLS certificates are generated and copied to the ActiveMQ containers for secure communication. Nginx is installed and configured as a reverse proxy to route incoming requests to the ActiveMQ instances. The playbook assumes that Docker and Nginx are available on the target machines.
+This updated playbook deploys two ActiveMQ instances: a primary and a backup. Each instance runs in its own deployment and is exposed through a service. The deployments are labeled with "role" to differentiate between primary and backup instances. The preStop lifecycle hook ensures that the ActiveMQ instance is gracefully terminated when stopping the container.
 
+Please ensure that you have the appropriate Docker image for ActiveMQ available in your Minikube environment and adjust the configuration files and commands as needed for your specific setup.
+
+Working on putting the nginx in front of the ActiveMQ instances.
