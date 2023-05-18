@@ -1,6 +1,8 @@
 # activemq
 Iac Code for ActiveMQ setup with HA
 
+_This project is under progress for more effcient ways to automate it. There may be some issues with different distributions of linux._
+
 **Prerequisite:**
 Install Ansible, kubeclt module for Ansible and Docker on your local machine.
 
