@@ -2,7 +2,8 @@
 Iac Code for ActiveMQ setup with HA
 
 **Prerequisite:**
-Install Ansible, Docker on your local machine.
+Install Ansible, kubeclt module for Ansible and Docker on your local machine.
+
 
 Steps
 1. Set up your inventory file (inventory.ini) with the IP addresses or hostnames of your primary and backup instances.
@@ -15,4 +16,4 @@ This updated playbook deploys two ActiveMQ instances: a primary and a backup. Ea
 
 Please ensure that you have the appropriate Docker image for ActiveMQ available in your Minikube environment and adjust the configuration files and commands as needed for your specific setup.
 
-*Working on putting the nginx in front of the ActiveMQ instances.
+
