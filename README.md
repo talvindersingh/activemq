@@ -6,9 +6,11 @@ Install Ansible, kubeclt module for Ansible and Docker on your local machine.
 
 
 Steps
+Create Docker image using Dockerfile and push it to registry (dicker build -t toffee/activemq:latest)
+
 1. Set up your inventory file (inventory.ini) with the IP addresses or hostnames of your primary and backup instances.
-2. Create a playbook (activemq.yml) that describes the deployment steps
-3. Create an Nginx configuration file (nginx.conf) and place it in the same directory as the playbook.
+2. Create a playbook (activemq.yml) that describes the deployment steps.
+3. Create an Nginx configuration file (nginx.conf) and place it in the same config folder or in same place as playbook.
 4. Run the playbook to deploy ActiveMQ - #**ansible-playbook -i inventory.ini activemq.yml**
 
 NOTE:
