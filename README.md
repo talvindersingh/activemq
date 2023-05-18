@@ -2,7 +2,7 @@
 Iac Code for ActiveMQ setup with HA
 
 **Prerequisite:**
-Install Ansible on your local machine.
+Install Ansible, Docker on your local machine.
 
 Steps
 1. Set up your inventory file (inventory.ini) with the IP addresses or hostnames of your primary and backup instances.
